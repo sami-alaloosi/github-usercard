@@ -45,7 +45,20 @@ function cardCreater(obj) {
   bio.innerText = `Bio: ${obj.bio}`
   profile.appendChild(address)
 
-  info.append(name, userName, location, profile, followers, following, bio )
+  const nameAndButton = document.createElement('div')
+  const otherInfo = document.createElement('div')
+
+  const button = document.createElement('button')
+  button.className ="red"
+  
+  button.innerText = "-"
+  button.addEventListener('click', () => {(otherInfo.classList.toggle("display-off")), (button.innerText === "+" ? button.innerText = "-" : button.innerText = "+" ), (button.classList.toggle("red"), button.classList.toggle("blue"))})
+
+  nameAndButton.append(name, button)
+
+  otherInfo.append(userName, location, profile, followers, following, bio)
+
+  info.append( nameAndButton , otherInfo)
 
   card.append(image, info)
 
@@ -59,6 +72,9 @@ followersArray.forEach(accounts =>{
 .then(response => cards.appendChild(cardCreater(response.data)) )
 .catch(err => console.log('THERE IS A PROBLEM', err))
 } )
+
+gsap.from(cards , {duration: 3, opacity: 0, scale: 0.3 , ease: 'back'});
+
 
 /*
   STEP 1: using axios, send a GET request to the following URL

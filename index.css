@@ -124,4 +124,19 @@ body {
 }
 
 
+ /* Stretch */
+
+ .display-off{
+   display: none;
+ }
+
+ .red {
+  color: white;
+  background-color: tomato;
+ }
+
+ .blue {
+  color: white;
+  background-color: skyblue;
+ }
 
