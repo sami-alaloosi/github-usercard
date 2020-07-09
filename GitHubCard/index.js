@@ -1,8 +1,88 @@
+import axios from 'axios';
+
+const cards = document.querySelector('.cards')
+
+
+axios.get('https://api.github.com/users/sami-alaloosi')
+.then(response => cards.appendChild(cardCreater(response.data)) )
+.catch(err => console.log('THERE IS A PROBLEM', err))
+
+function cardCreater(obj) {
+
+  const card = document.createElement('div')
+  card.className = "card"
+
+  const image = document.createElement('img')
+  image.src = obj.avatar_url
+  const info = document.createElement('div')
+  info.className = "card-info"
+
+  const name = document.createElement('h3')
+  name.className ="name"
+  name.innerText = obj.name
+
+  const userName = document.createElement('p')
+  userName.className = "username"
+  userName.innerText = obj.login
+
+  const location = document.createElement('p')
+  location.innerText = `Location: ${obj.location}`
+
+  const profile = document.createElement('p')
+  profile.innerText = "Profile: "
+
+  const address = document.createElement('a')
+  address.href = obj.html_url
+  address.innerText = obj.html_url
+  
+  const followers = document.createElement('p')
+  followers.innerText = `Followers: ${obj.followers}`
+
+  const following = document.createElement('p')
+  following.innerText = `Following: ${obj.following}`
+
+  const bio = document.createElement('p')
+  bio.innerText = `Bio: ${obj.bio}`
+  profile.appendChild(address)
+
+  const nameAndButton = document.createElement('div')
+  const otherInfo = document.createElement('div')
+
+  const button = document.createElement('button')
+  button.className ="red"
+  
+  button.innerText = "-"
+  button.addEventListener('click', () => {(otherInfo.classList.toggle("display-off")), (button.innerText === "+" ? button.innerText = "-" : button.innerText = "+" ), (button.classList.toggle("red"), button.classList.toggle("blue"))})
+
+  nameAndButton.append(name, button)
+
+  otherInfo.append(userName, location, profile, followers, following, bio)
+
+  info.append( nameAndButton , otherInfo)
+
+  card.append(image, info)
+
+  return card
+}
+
+const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"   ];
+
+followersArray.forEach(accounts =>{
+  axios.get(`https://api.github.com/users/${accounts}`)
+.then(response => cards.appendChild(cardCreater(response.data)) )
+.catch(err => console.log('THERE IS A PROBLEM', err))
+} )
+
+gsap.from(cards , {duration: 3, opacity: 0, scale: 0.3 , ease: 'back'});
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +108,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +129,9 @@ const followersArray = [];
       </div>
     </div>
 */
+
+
+
 
 /*
   List of LS Instructors Github username's:
